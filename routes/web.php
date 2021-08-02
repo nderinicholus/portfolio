@@ -27,6 +27,8 @@ Route::resource('/admin/blog/blog-categories', BlogCategoriesController::class)-
 
 Route::resource('/admin/blog', BlogController::class)->middleware(['auth']);
 
+Route::post('images', 'ImageController@store')->name('images.store')->middleware(['auth']);
+
 
 
 require __DIR__.'/auth.php'; 
