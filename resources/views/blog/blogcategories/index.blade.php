@@ -7,14 +7,42 @@
 
     <section class="container px-5 py-12 mx-auto">
         <div class="mb-12">
-            <h2 class="text-2xl font-medium text-gray-900 title-font px-4">All Categories {{ $categories->count() }}
+            <h2 class="text-2xl font-medium text-gray-900 title-font px-4">All Categories ({{ $categories->count() }})
             </h2>
             <div class="my-6">
                 <div class="flex flex-wrap md:flex-nowrap">
+
+                    
+                    
                     <div class="content w-full md:w-3/4 leading-relaxed text-base">
+                        @if (Session::has('success'))
+                            <div class="bg-green-200 p-6 mb-3">
+                                {{ Session::get('success') }}
+                            </div>
+                        @endif
+
+
                         @if(($categories->count()) > 0)
                         @foreach ($categories as $category)
-                        <a href="" class="py-6 px-4 flex flex-wrap md:flex-nowrap bg-white border-b hover:bg-yellow-200">{{ $category->title }}</a>
+                        <div class="py-6 px-4 flex flex-wrap md:flex-nowrap bg-white border-b hover:bg-yellow-200">
+                        
+                            <a href="{{ route('blog-categories.edit', $category->id) }}" class="items-start">{{ $category->title }}</a>
+
+                            <form action="{{ route('blog-categories.destroy', $category->id) }}" method="POST" class="md:flex-grow flex justify-end">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }} 
+
+                            <span>
+                                <input type="submit" value="Delete" class="bg-red-600 p-1 rounded text-white">
+                            </span>
+
+                            </form>
+
+                        </div>
+
+                        
+
+
                         @endforeach
                         @else
                         <p class="text-gray-800 bg-white pl-4 py-3">
@@ -38,7 +66,8 @@
                         placeholder="Category name"
                         :value="old('title')"
                         required />
-                        <button class="bg-blue-800 text-white p-2 rounded mt-2 shadow w-full">Save </button>
+                        
+                        <button class="bg-blue-800 text-white p-2 rounded mt-2 shadow w-full hover:bg-yellow-200 hover:text-gray-900">Save </button>
                         </form>
                     </div>
                 </div>

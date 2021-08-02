@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Session;
 
 
 class BlogCategoriesController extends Controller
@@ -47,6 +48,8 @@ class BlogCategoriesController extends Controller
         $category->slug = Str::slug($request->title, '-');
         $category->save();
 
+        Session::flash('success', 'Category added successfully');
+
         return redirect()->route('blog-categories.index');
 
 
@@ -71,7 +74,8 @@ class BlogCategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = BlogCategory::findOrFail($id);
+        return view('blog.blogcategories.edit', compact('category'));
     }
 
     /**
@@ -83,7 +87,18 @@ class BlogCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required'    
+        ]);
+
+        $category = BlogCategory::findOrFail($id);
+        $category->title = $request->title;
+        $category->slug = Str::slug($request->title, '-');
+        $category->save();
+
+        Session::flash('success', 'Category updated successfully');
+
+        return redirect()->route('blog-categories.index');
     }
 
     /**
@@ -94,6 +109,11 @@ class BlogCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = BlogCategory::findOrFail($id);
+        $category->delete();
+
+        Session::flash('success', 'Delete Successful');
+
+        return redirect()->route('blog-categories.index');
     }
 }
