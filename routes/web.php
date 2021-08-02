@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers;
+use App\Http\Controllers\BlogCategoriesController;
 use App\Http\Controllers\BlogController;
 
 /*
@@ -23,6 +23,10 @@ Route::get('/admin/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::resource('/admin/blog/blog-categories', BlogCategoriesController::class)->middleware('auth');
+
 Route::resource('/admin/blog', BlogController::class)->middleware(['auth']);
+
+
 
 require __DIR__.'/auth.php'; 

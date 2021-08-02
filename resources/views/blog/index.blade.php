@@ -1,22 +1,24 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-2xl font-medium text-gray-900 title-font px-4">
         {{ __('Blog Articles') }}
         </h2>
     </x-slot>
-    <div class="py-6 mx-auto max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="bg-white p-6">
 
-            @if(($posts->count()) > 1)
+    <section class="container px-5 py-12 mx-auto">
+        <div class="mb-12">
+            <div class="my-6">
+                @if(($posts->count()) > 0)
                 @foreach ($posts as $post)
-                <li>{{ $post->title }}</li>
+                <a href="" class="py-6 px-4 flex flex-wrap md:flex-nowrap bg-white">{{ $post->title }}</a>
                 @endforeach
                 @else
                 <p class="text-gray-800">
                     No Posts at the moment
                 </p>
             @endif
+            </div>
         </div>
-        
-    </div>
+    </section>
+    
 </x-app-layout>

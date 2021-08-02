@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class BlogCategoriesController extends Controller
 {
@@ -13,7 +16,8 @@ class BlogCategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $categories = BlogCategory::get();
+        return view('blog.blogcategories.index', compact('categories'));
     }
 
     /**
@@ -23,7 +27,7 @@ class BlogCategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog.blogcategories.index');
     }
 
     /**
@@ -34,7 +38,18 @@ class BlogCategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required|unique:blog_categories,title'    
+        ]);
+
+        $category = new BlogCategory;
+        $category->title = $request->title;
+        $category->slug = Str::slug($request->title, '-');
+        $category->save();
+
+        return redirect()->route('blog-categories.index');
+
+
     }
 
     /**
