@@ -33,7 +33,7 @@
                                 {{ method_field('DELETE') }} 
 
                             <span>
-                                <input type="submit" value="Delete" class="bg-red-600 p-1 rounded text-white">
+                                <input type="submit" value="Delete" class="bg-red-600 p-1 rounded text-white" onclick="return confirm('Are you sure?')">
                             </span>
 
                             </form>
